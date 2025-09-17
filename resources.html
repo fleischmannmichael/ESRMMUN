@@ -1,0 +1,774 @@
+<div class="hero-section">
+        <div class="hero-content">
+            <h1>Resource Hub</h1>
+            <p>Find everything you need to excel in Model UN</p>
+            <div class="hero-buttons">
+                <a href="#add-resource" class="hero-btn">📝 Submit Resource</a>
+                <a href="#request" class="hero-btn">💡 Request Resource</a>
+            </div>
+        </div>
+    </div><!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resource Hub - MUNESRM</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Georgia', 'Times New Roman', serif;
+            line-height: 1.6;
+            color: #333333;
+            background-color: #f8f9fa;
+        }
+
+        /* Header - Consistent across all pages */
+        header {
+            background: #004C97;
+            color: white;
+            padding: 0.6rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 76, 151, 0.15);
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            min-height: 50px;
+        }
+
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .school-logo {
+            height: 40px;
+            width: auto;
+        }
+
+        .logo-divider {
+            width: 2px;
+            height: 35px;
+            background: rgba(255, 255, 255, 0.6);
+        }
+
+        .logo-img {
+            width: 40px;
+            height: 40px;
+            background: url('ESRMMUN.png') center/contain no-repeat;
+            border-radius: 50%;
+            background-color: white;
+            padding: 2px;
+        }
+
+        .logo-text h1 {
+            font-size: 1.4rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            margin: 0 0 0px 0;
+            
+        }
+
+        .tagline {
+            font-size: 0.8rem;
+            opacity: 0.9;
+            font-style: italic;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 25px;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1rem;
+            padding: 8px 12px;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+        }
+
+        nav a:hover, nav a.active {
+            background-color: rgba(255, 255, 255, 0.15);
+        }
+
+        /* Hero Section */
+        .hero-section {
+            background: linear-gradient(135deg, #004C97 0%, #6CB4EE 100%);
+            color: white;
+            padding: 120px 0 80px;
+            text-align: center;
+            margin-top: 70px;
+        }
+
+        .hero-content h1 {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+
+        .hero-content p {
+            font-size: 1.3rem;
+            margin-bottom: 40px;
+            opacity: 0.9;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .hero-btn {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 15px 30px;
+            border: 2px solid white;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .hero-btn:hover {
+            background: white;
+            color: #004C97;
+        }
+
+        /* Main Layout */
+        .main-container {
+            display: flex;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            gap: 40px;
+        }
+
+        /* Ultra-minimal Sidebar */
+        .sidebar {
+            width: 280px;
+            flex-shrink: 0;
+            background: white;
+            padding: 20px;
+            height: fit-content;
+            position: sticky;
+            top: 120px;
+        }
+
+        .sidebar-header {
+            margin-bottom: 30px;
+        }
+
+        .sidebar-header h2 {
+            font-size: 2rem;
+            color: #1f2937;
+            margin-bottom: 8px;
+            font-weight: 700;
+        }
+
+        .sidebar-description {
+            color: #6b7280;
+            font-size: 0.9rem;
+            line-height: 1.5;
+            margin-bottom: 20px;
+        }
+
+        .search-container {
+            margin-bottom: 30px;
+        }
+
+        .search-box {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            transition: all 0.2s;
+            background: #f9fafb;
+            color: #6b7280;
+        }
+
+        .search-box::placeholder {
+            color: #9ca3af;
+            font-weight: 400;
+        }
+
+        .search-box:focus {
+            outline: none;
+            border-color: #e5e7eb;
+            background: #f9fafb;
+        }
+
+        .filter-section {
+            margin-bottom: 20px;
+        }
+
+        .filter-title {
+            font-weight: 600;
+            color: #1f2937;
+            margin-bottom: 8px;
+            font-size: 0.95rem;
+        }
+
+        .filter-dropdown {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            background: #f9fafb;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            color: #1f2937;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+            background-position: right 12px center;
+            background-repeat: no-repeat;
+            background-size: 16px;
+            padding-right: 40px;
+        }
+
+        .filter-dropdown:hover, .filter-dropdown:focus {
+            border-color: #d1d5db;
+            outline: none;
+        }
+
+        /* Clear Filters Button */
+        .clear-filters {
+            width: 100%;
+            padding: 10px 12px;
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            color: #6b7280;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.2s;
+            margin-top: 15px;
+            font-weight: 500;
+        }
+
+        .clear-filters:hover {
+            background: #f9fafb;
+            border-color: #d1d5db;
+        }
+
+        /* Main Content Area */
+        .content-area {
+            flex: 1;
+        }
+
+        .results-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .results-count {
+            color: #666;
+            font-size: 0.95rem;
+        }
+
+        .view-toggle {
+            display: flex;
+            background: white;
+            border-radius: 6px;
+            padding: 4px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .view-btn {
+            padding: 6px 12px;
+            border: none;
+            background: none;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+
+        .view-btn.active {
+            background: #6CB4EE;
+            color: white;
+        }
+
+        /* Resource Cards */
+        .resources-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 25px;
+        }
+
+        .resource-card {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+            border: 1px solid #f1f5f9;
+            position: relative;
+        }
+
+        .resource-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.12);
+        }
+
+        .card-tags {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+        }
+
+        .tag {
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .tag.template {
+            background: #e1f5fe;
+            color: #0277bd;
+        }
+
+        .tag.guide {
+            background: #f3e5f5;
+            color: #7b1fa2;
+        }
+
+        .tag.video {
+            background: #fff3e0;
+            color: #f57c00;
+        }
+
+        .tag.practice {
+            background: #e8f5e8;
+            color: #388e3c;
+        }
+
+        .tag.case-study {
+            background: #fce4ec;
+            color: #c2185b;
+        }
+
+        .tag.beginner {
+            background: #e8f5e8;
+            color: #2e7d32;
+        }
+
+        .tag.intermediate {
+            background: #fff3e0;
+            color: #ef6c00;
+        }
+
+        .tag.advanced {
+            background: #ffebee;
+            color: #c62828;
+        }
+
+        .card-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #004C97;
+            margin-bottom: 12px;
+            line-height: 1.3;
+        }
+
+        .card-description {
+            color: #666;
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+
+        .card-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .card-button {
+            background: #004C97;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 6px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+
+        .card-button:hover {
+            background: #003d7a;
+        }
+
+        .card-format {
+            font-size: 0.85rem;
+            color: #8DAA91;
+            font-weight: 500;
+        }
+
+        /* Mobile Responsiveness */
+        @media (max-width: 1024px) {
+            .main-container {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                width: 100%;
+                order: 1;
+                position: static;
+                margin-bottom: 30px;
+            }
+
+            .content-area {
+                order: 2;
+            }
+
+            .resources-grid {
+                grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 10px;
+                padding: 8px 20px;
+            }
+
+            .hero-section {
+                padding: 100px 20px 60px;
+                margin-top: 90px;
+            }
+
+            .hero-content h1 {
+                font-size: 2.2rem;
+            }
+
+            .hero-content p {
+                font-size: 1.1rem;
+            }
+
+            .hero-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .hero-btn {
+                width: 100%;
+                max-width: 250px;
+            }
+
+            nav ul {
+                gap: 12px;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .main-container {
+                padding: 20px 15px;
+            }
+
+            .sidebar {
+                padding: 20px;
+                margin-bottom: 25px;
+            }
+
+            .sidebar-header h2 {
+                font-size: 1.3rem;
+            }
+
+            .resources-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .results-header {
+                flex-direction: column;
+                gap: 15px;
+                align-items: flex-start;
+            }
+
+            .view-toggle {
+                align-self: flex-end;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <div class="logo-section">
+                <img src="ESRMschool.png" alt="ESRM School Logo" class="school-logo">
+                <div class="logo-divider"></div>
+                <div class="logo-img"></div>
+                <div class="logo-text">
+                    <h1>MUNESRM</h1>
+                    <div class="tagline">Debate. Lead. Inspire.</div>
+                </div>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="resources.html" class="active">Resources</a></li>        
+                    <li><a href="learning-path.html">Learning Path</a></li>
+                    <li><a href="members.html">Members</a></li>
+                    <li><a href="join.html">Join Us</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div class="main-container">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h2>Resource Hub</h2>
+                <p class="sidebar-description">
+                    Find the perfect resources for your MUN journey. Use the search bar and filters below to discover templates, guides, and training materials.
+                </p>
+            </div>
+
+            <div class="search-container">
+                <input type="text" class="search-box" placeholder="Search resources..." id="searchInput">
+            </div>
+
+            <div class="filter-section">
+                <div class="filter-title">Type</div>
+                <select class="filter-dropdown" id="toolType">
+                    <option value="">All Types</option>
+                    <option value="template">Templates</option>
+                    <option value="guide">Guides</option>
+                    <option value="video">Videos</option>
+                    <option value="practice">Practice Activities</option>
+                    <option value="case-study">Case Studies</option>
+                </select>
+            </div>
+
+            <div class="filter-section">
+                <div class="filter-title">Level</div>
+                <select class="filter-dropdown" id="level">
+                    <option value="">All Levels</option>
+                    <option value="beginner">Beginner</option>
+                    <option value="intermediate">Intermediate</option>
+                    <option value="advanced">Advanced</option>
+                </select>
+            </div>
+
+            <div class="filter-section">
+                <div class="filter-title">Skill Focus</div>
+                <select class="filter-dropdown" id="skillFocus">
+                    <option value="">All Skills</option>
+                    <option value="research">Research & Analysis</option>
+                    <option value="speaking">Public Speaking</option>
+                    <option value="negotiation">Negotiation & Diplomacy</option>
+                    <option value="writing">Writing</option>
+                    <option value="leadership">Leadership</option>
+                </select>
+            </div>
+
+            <div class="filter-section">
+                <div class="filter-title">Committee</div>
+                <select class="filter-dropdown" id="committeeType">
+                    <option value="">All Committees</option>
+                    <option value="ga">General Assembly</option>
+                    <option value="crisis">Crisis</option>
+                    <option value="specialized">Specialized/Regional</option>
+                    <option value="icj">ICJ/Advisory</option>
+                </select>
+            </div>
+
+            <button class="clear-filters" id="clearFilters">Clear All Filters</button>
+        </aside>
+
+        <main class="content-area">
+            <div class="results-header">
+                <div class="results-count" id="resultsCount">Showing 24 resources</div>
+                <div class="view-toggle">
+                    <button class="view-btn active">Grid</button>
+                    <button class="view-btn">List</button>
+                </div>
+            </div>
+
+            <div class="resources-grid" id="resourcesGrid">
+                <!-- Position Paper Template -->
+                <div class="resource-card" data-type="template" data-level="beginner" data-skill="writing">
+                    <div class="card-tags">
+                        <span class="tag template">Template</span>
+                        <span class="tag beginner">Beginner</span>
+                    </div>
+                    <h3 class="card-title">Position Paper Template</h3>
+                    <p class="card-description">
+                        Complete template for writing effective position papers with examples and formatting guidelines.
+                    </p>
+                    <div class="card-footer">
+                        <a href="https://drive.google.com/file/d/11V_RNd_tUn-n_fTWzT3DPN03tSZZuM_X/view?usp=sharing" class="card-button" target="_blank" rel="noopener noreferrer">View Template</a>
+                        <span class="card-format">Google Docs</span>
+                    </div>
+                </div>
+
+                <!-- Draft Resolution Template -->
+                <div class="resource-card" data-type="template" data-level="intermediate" data-skill="writing">
+                    <div class="card-tags">
+                        <span class="tag template">Template</span>
+                        <span class="tag intermediate">Intermediate</span>
+                    </div>
+                    <h3 class="card-title">Draft Resolution Template</h3>
+                    <p class="card-description">
+                        Professional template for crafting resolutions with proper UN format and clause structures.
+                    </p>
+                    <div class="card-footer">
+                        <a href="https://drive.google.com/file/d/1-ruxDSlGqivIjrjPbhfGowAcfB1u7jd1/view?usp=sharing" class="card-button" target="_blank" rel="noopener noreferrer">View Template</a>
+                        <span class="card-format">Google Docs</span>
+                    </div>
+                </div>
+
+                <!-- Working Paper Format -->
+                <div class="resource-card" data-type="template" data-level="beginner" data-skill="writing">
+                    <div class="card-tags">
+                        <span class="tag template">Template</span>
+                        <span class="tag beginner">Beginner</span>
+                    </div>
+                    <h3 class="card-title">Working Paper Format</h3>
+                    <p class="card-description">
+                        Format guidelines and template for creating effective working papers in committee.
+                    </p>
+                    <div class="card-footer">
+                        <a href="#" class="card-button" target="_blank" rel="noopener noreferrer">View Format</a>
+                        <span class="card-format">Google Docs</span>
+                    </div>
+                </div>
+
+                <!-- Parliamentary Procedure Guide -->
+                <div class="resource-card" data-type="guide" data-level="beginner" data-skill="speaking">
+                    <div class="card-tags">
+                        <span class="tag guide">Guide</span>
+                        <span class="tag beginner">Beginner</span>
+                    </div>
+                    <h3 class="card-title">Parliamentary Procedure Guide</h3>
+                    <p class="card-description">
+                        Master the rules of formal debate with this comprehensive guide to parliamentary procedure.
+                    </p>
+                    <div class="card-footer">
+                        <a href="https://docs.google.com/document/d/1jQ_x76HlBZUoctM2cKMyidQLoG6P8lSd/edit?usp=sharing&ouid=112229347230181136361&rtpof=true&sd=true" class="card-button" target="_blank" rel="noopener noreferrer">View Guide</a>
+                        <span class="card-format">Google Docs</span>
+                    </div>
+                </div>
+
+                <!-- Speech Structure Template -->
+                <div class="resource-card" data-type="template" data-level="beginner" data-skill="speaking">
+                    <div class="card-tags">
+                        <span class="tag template">Template</span>
+                        <span class="tag beginner">Beginner</span>
+                    </div>
+                    <h3 class="card-title">Speech Structure Template</h3>
+                    <p class="card-description">
+                        Framework for organizing compelling speeches with introduction, body, and conclusion templates.
+                    </p>
+                    <div class="card-footer">
+                        <a href="https://drive.google.com/file/d/1u_JqLWfYKe8MiAzOIo3NMGjW9f45Zqfi/view?usp=sharing" class="card-button" target="_blank" rel="noopener noreferrer">View Template</a>
+                        <span class="card-format">Google Docs</span>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Filter functionality
+        const filters = {
+            search: document.getElementById('searchInput'),
+            toolType: document.getElementById('toolType'),
+            level: document.getElementById('level'),
+            skillFocus: document.getElementById('skillFocus'),
+            committeeType: document.getElementById('committeeType')
+        };
+
+        const resourceCards = document.querySelectorAll('.resource-card');
+        const resultsCount = document.getElementById('resultsCount');
+
+        function filterResources() {
+            let visibleCount = 0;
+            
+            resourceCards.forEach(card => {
+                let show = true;
+                
+                // Search filter
+                const searchTerm = filters.search.value.toLowerCase();
+                if (searchTerm) {
+                    const title = card.querySelector('.card-title').textContent.toLowerCase();
+                    const description = card.querySelector('.card-description').textContent.toLowerCase();
+                    if (!title.includes(searchTerm) && !description.includes(searchTerm)) {
+                        show = false;
+                    }
+                }
+                
+                // Dropdown filters
+                if (filters.toolType.value && card.dataset.type !== filters.toolType.value) show = false;
+                if (filters.level.value && card.dataset.level !== filters.level.value) show = false;
+                if (filters.skillFocus.value && card.dataset.skill !== filters.skillFocus.value) show = false;
+                // Committee type filter removed since none of the current resources have committee data
+                
+                card.style.display = show ? 'block' : 'none';
+                if (show) visibleCount++;
+            });
+            
+            resultsCount.textContent = `Showing ${visibleCount} resource${visibleCount !== 1 ? 's' : ''}`;
+        }
+
+        // Add event listeners
+        Object.values(filters).forEach(filter => {
+            filter.addEventListener('input', filterResources);
+        });
+
+        // View toggle functionality
+        const viewBtns = document.querySelectorAll('.view-btn');
+        viewBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                viewBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+            });
+        });
+
+        // Clear filters functionality
+        const clearFiltersBtn = document.getElementById('clearFilters');
+        clearFiltersBtn.addEventListener('click', () => {
+            filters.search.value = '';
+            Object.values(filters).forEach(filter => {
+                if (filter.tagName === 'SELECT') {
+                    filter.selectedIndex = 0;
+                }
+            });
+            filterResources();
+        });
+
+        // Initial filter
+        filterResources();
+    </script>
+</body>
+</html>
