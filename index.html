@@ -342,33 +342,40 @@
             border-radius: 20px;
         }
 
-        /* Footer */
+        /* Footer Styles */
         footer {
             background: linear-gradient(135deg, #004C97 0%, #333333 100%);
             color: white;
-            padding: 60px 0 30px;
+            padding: 40px 0 20px;
+            margin-top: 60px;
         }
 
         .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 40px;
-            margin-bottom: 30px;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            margin-bottom: 20px;
         }
 
         .footer-section h4 {
-            margin-bottom: 20px;
-            font-size: 1.3rem;
+            margin-bottom: 15px;
+            font-size: 1.1rem;
             color: #8DAA91;
+            font-weight: 600;
         }
 
         .footer-section p,
         .footer-section a {
             color: #FFFFFF;
             text-decoration: none;
-            line-height: 1.8;
-            font-size: 1rem;
+            line-height: 1.6;
+            font-size: 0.95rem;
             opacity: 0.9;
+            margin-bottom: 8px;
+            display: block;
         }
 
         .footer-section a:hover {
@@ -378,112 +385,72 @@
         }
 
         .footer-bottom {
-            text-align: center;
-            padding-top: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px 20px 0;
             border-top: 1px solid rgba(255, 255, 255, 0.2);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .footer-bottom p {
             color: rgba(255, 255, 255, 0.8);
+            font-size: 0.9rem;
+            margin: 0;
         }
 
-        /* Responsive Design */
-        @media (max-width: 1024px) {
-            .container {
-                padding: 0 15px;
-            }
-            
-            .main-actions {
-                gap: 30px;
-            }
-            
-            .hero-content h1 {
-                font-size: 2.8rem;
-            }
+        .creator-credit {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.85rem;
+            font-style: italic;
         }
 
+        /* Mobile Responsiveness */
         @media (max-width: 768px) {
-            .header-content {
-                flex-direction: column;
-                gap: 10px;
-                padding: 8px 20px;
-                min-height: auto;
-            }
-
-            .logo-section {
-                gap: 10px;
-            }
-
-            .logo-text h1 {
-                font-size: 1.2rem;
-            }
-
-            .tagline {
-                font-size: 0.75rem;
-            }
-
-            nav ul {
-                flex-wrap: wrap;
-                gap: 12px;
-                justify-content: center;
-            }
-
-            nav a {
-                font-size: 0.9rem;
-                padding: 6px 10px;
-            }
-
-            .hero-content {
-                padding-top: 120px;
-                padding-left: 15px;
-                padding-right: 15px;
-            }
-
-            .hero-content h1 {
-                font-size: 2.2rem;
-                line-height: 1.1;
-            }
-
-            .hero-text {
-                font-size: 1.1rem;
-                margin-bottom: 40px;
-            }
-
-            .hero-logo {
-                width: 140px;
-                height: 140px;
-            }
-
-            .main-actions {
-                grid-template-columns: 1fr;
-                gap: 25px;
-                margin-bottom: 60px;
-            }
-
-            .section-title {
-                font-size: 2rem;
-            }
-
-            .section-subtitle {
-                font-size: 1.1rem;
-                margin-bottom: 40px;
-            }
-
-            .event-item {
-                flex-direction: column;
-                text-align: center;
-                gap: 15px;
-                padding: 20px;
-            }
-
-            .event-date {
-                width: 100%;
-                text-align: center;
+            footer {
+                padding: 30px 0 15px;
             }
 
             .footer-content {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 20px;
+            }
+
+            .footer-bottom {
+                flex-direction: column;
+                text-align: center;
+                gap: 10px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .footer-content {
                 grid-template-columns: 1fr;
-                gap: 30px;
                 text-align: center;
             }
         }
+
+        /* Demo body styles (remove when implementing) */
+        body {
+            font-family: 'Georgia', 'Times New Roman', serif;
+            margin: 0;
+            padding: 0;
+            background: #f8f9fa;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .demo-content {
+            flex: 1;
+            padding: 40px 20px;
+            text-align: center;
+            color: #333;
+        }
+
 
         @media (max-width: 480px) {
             .hero-content h1 {
@@ -559,27 +526,28 @@
             <div class="container">
                 <h2 class="section-title">Start Your Diplomatic Journey</h2>
                 <p class="section-subtitle">Choose your path to excellence in international relations and public speaking</p>
-                
                 <div class="main-actions">
+
+                    <a href="conferences.html" class="action-link">
+                        <div class="action-card">
+                            <div class="action-icon">ðŸ›ï¸</div>
+                            <h3>Conferences & Events</h3>
+                            <p>Discover upcoming MUN conferences, workshops, and competitive opportunities</p>
+                        </div>
+                    </a>
+
                     <a href="resources.html" class="action-link">
                         <div class="action-card">
-                            <div class="action-icon">📚</div>
+                            <div class="action-icon">ðŸ“š</div>
                             <h3>Resource Hub</h3>
                             <p>Access templates, research tools, and training materials to excel as a delegate in any committee</p>
                         </div>
                     </a>
                     
-                    <a href="conferences.html" class="action-link">
-                        <div class="action-card">
-                            <div class="action-icon">🏛️</div>
-                            <h3>Conferences & Events</h3>
-                            <p>Discover upcoming MUN conferences, workshops, and competitive opportunities</p>
-                        </div>
-                    </a>
                     
                     <a href="learning-path.html" class="action-link">
                         <div class="action-card">
-                            <div class="action-icon">🎯</div>
+                            <div class="action-icon">ðŸŽ¯</div>
                             <h3>Learning Path</h3>
                             <p>Follow a structured journey from beginner to advanced delegate with step-by-step guidance</p>
                         </div>
@@ -591,17 +559,17 @@
                     <h3>Upcoming Diplomatic Events</h3>
                     <div class="event-item">
                         <div class="event-details">
-                            <div class="event-title">Parliamentary Procedure Workshop</div>
-                            <div class="event-description">Master the art of formal debate and diplomatic protocol</div>
+                            <div class="event-title">GOMUN</div>
+                            <div class="event-description">GOMUN Conference Prague</div>
                         </div>
-                        <div class="event-date">November 6-10, 2025</div>
+                        <div class="event-date">November 7-10, 2025</div>
                     </div>
                     <div class="event-item">
                         <div class="event-details">
-                            <div class="event-title">ESRM MUN Conference</div>
-                            <div class="event-description">Compete with delegates from across the region</div>
+                            <div class="event-title">ESRMMUN Conference</div>
+                            <div class="event-description">Internal MUN Conference</div>
                         </div>
-                        <div class="event-date">Decmeber 5, 2025</div>
+                        <div class="event-date">December 5, 2025</div>
                     </div>
                 </div>
             </div>
@@ -609,30 +577,31 @@
     </main>
 
     <footer>
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-section">
-                    <h4>Contact Information</h4>
-                    <p>Faculty Advisor: [Faculty Name]</p>
-                    <p>Email: munesrm@school.edu</p>
-                    <p>Meeting Room: [Room Number]</p>
-                </div>
-                <div class="footer-section">
-                    <h4>Connect With Us</h4>
-                    <p><a href="#">Instagram @munesrm</a></p>
-                    <p><a href="#">School Newsletter</a></p>
-                    <p><a href="#">Alumni Network</a></p>
-                </div>
-                <div class="footer-section">
-                    <h4>Quick Access</h4>
-                    <p><a href="resources.html">Resource Hub</a></p>
-                    <p><a href="learning-path.html">Learning Path</a></p>
-                    <p><a href="members.html">Our Members</a></p>
-                </div>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>Contact Information</h4>
+                <p>Faculty Advisor: Mr. Namnoum</p>
+                <p>Email: munesrm@school.edu</p>
+                <p>ESRM School</p>
             </div>
-            <div class="footer-bottom">
-                <p>&copy; 2025 MUNESRM - Empowering Future Diplomats</p>
+            
+            <div class="footer-section">
+                <h4>Connect With Us</h4>
+                <a href="join.html">Join MUN ESRM</a>
+                <a href="#">Instagram @munesrm</a>
             </div>
+            
+            <div class="footer-section">
+                <h4>Quick Links</h4>
+                <a href="index.html">Home</a>
+                <a href="resources.html">Resources</a>
+                <a href="learning-path.html">Learning Path</a>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>&copy; 2025 MUNESRM - Empowering Future Diplomats</p>
+            <p class="creator-credit">Created by Michael Fleischmann</p>
         </div>
     </footer>
 </body>

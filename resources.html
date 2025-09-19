@@ -770,5 +770,143 @@
         // Initial filter
         filterResources();
     </script>
+            <style>
+        /* Footer Styles */
+        footer {
+            background: linear-gradient(135deg, #004C97 0%, #333333 100%);
+            color: white;
+            padding: 40px 0 20px;
+            margin-top: 60px;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            margin-bottom: 20px;
+        }
+
+        .footer-section h4 {
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+            color: #8DAA91;
+            font-weight: 600;
+        }
+
+        .footer-section p,
+        .footer-section a {
+            color: #FFFFFF;
+            text-decoration: none;
+            line-height: 1.6;
+            font-size: 0.95rem;
+            opacity: 0.9;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        .footer-section a:hover {
+            opacity: 1;
+            color: #6CB4EE;
+            text-decoration: underline;
+        }
+
+        .footer-bottom {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px 20px 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .footer-bottom p {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 0.9rem;
+            margin: 0;
+        }
+
+        .creator-credit {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.85rem;
+            font-style: italic;
+        }
+
+        /* Mobile Responsiveness */
+        @media (max-width: 768px) {
+            footer {
+                padding: 30px 0 15px;
+            }
+
+            .footer-content {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 20px;
+            }
+
+            .footer-bottom {
+                flex-direction: column;
+                text-align: center;
+                gap: 10px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .footer-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+        }
+
+        /* Demo body styles (remove when implementing) */
+        body {
+            font-family: 'Georgia', 'Times New Roman', serif;
+            margin: 0;
+            padding: 0;
+            background: #f8f9fa;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .demo-content {
+            flex: 1;
+            padding: 40px 20px;
+            text-align: center;
+            color: #333;
+        }
+    </style>
+        <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>Contact Information</h4>
+                <p>Faculty Advisor: Mr. Namnoum</p>
+                <p>Email: munesrm@es-rm.net</p>
+                <p>ESRM School</p>
+            </div>
+            
+            <div class="footer-section">
+                <h4>Connect With Us</h4>
+                <a href="join.html">Join MUN ESRM</a>
+                <a href="#">Instagram @munesrm</a>
+            </div>
+            
+            <div class="footer-section">
+                <h4>Quick Links</h4>
+                <a href="index.html">Home</a>
+                <a href="resources.html">Resources</a>
+                <a href="learning-path.html">Learning Path</a>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>&copy; 2025 MUNESRM - Empowering Future Diplomats</p>
+            <p class="creator-credit">Created by Michael Fleischmann</p>
+        </div>
+    </footer>
 </body>
 </html>
