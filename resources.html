@@ -1,13 +1,4 @@
-<div class="hero-section">
-        <div class="hero-content">
-            <h1>Resource Hub</h1>
-            <p>Find everything you need to excel in Model UN</p>
-            <div class="hero-buttons">
-                <a href="#add-resource" class="hero-btn">📝 Submit Resource</a>
-                <a href="#request" class="hero-btn">💡 Request Resource</a>
-            </div>
-        </div>
-    </div><!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -27,7 +18,6 @@
             background-color: #f8f9fa;
         }
 
-        /* Header - Consistent across all pages */
         header {
             background: #004C97;
             color: white;
@@ -79,8 +69,7 @@
             font-size: 1.4rem;
             font-weight: 700;
             letter-spacing: 1px;
-            margin: 0 0 0px 0;
-            
+            margin: 0;
         }
 
         .tagline {
@@ -109,7 +98,6 @@
             background-color: rgba(255, 255, 255, 0.15);
         }
 
-        /* Hero Section */
         .hero-section {
             background: linear-gradient(135deg, #004C97 0%, #6CB4EE 100%);
             color: white;
@@ -155,7 +143,6 @@
             color: #004C97;
         }
 
-        /* Main Layout */
         .main-container {
             display: flex;
             max-width: 1400px;
@@ -164,7 +151,6 @@
             gap: 40px;
         }
 
-        /* Ultra-minimal Sidebar */
         .sidebar {
             width: 280px;
             flex-shrink: 0;
@@ -253,7 +239,6 @@
             outline: none;
         }
 
-        /* Clear Filters Button */
         .clear-filters {
             width: 100%;
             padding: 10px 12px;
@@ -273,7 +258,6 @@
             border-color: #d1d5db;
         }
 
-        /* Main Content Area */
         .content-area {
             flex: 1;
         }
@@ -312,7 +296,6 @@
             color: white;
         }
 
-        /* Resource Cards */
         .resources-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
@@ -350,6 +333,11 @@
             letter-spacing: 0.5px;
         }
 
+        .tag.game {
+            background: #fef3c7;
+            color: #d97706;
+        }
+
         .tag.template {
             background: #e1f5fe;
             color: #0277bd;
@@ -360,21 +348,6 @@
             color: #7b1fa2;
         }
 
-        .tag.video {
-            background: #fff3e0;
-            color: #f57c00;
-        }
-
-        .tag.practice {
-            background: #e8f5e8;
-            color: #388e3c;
-        }
-
-        .tag.case-study {
-            background: #fce4ec;
-            color: #c2185b;
-        }
-
         .tag.beginner {
             background: #e8f5e8;
             color: #2e7d32;
@@ -383,11 +356,6 @@
         .tag.intermediate {
             background: #fff3e0;
             color: #ef6c00;
-        }
-
-        .tag.advanced {
-            background: #ffebee;
-            color: #c62828;
         }
 
         .card-title {
@@ -433,7 +401,71 @@
             font-weight: 500;
         }
 
-        /* Mobile Responsiveness */
+        footer {
+            background: linear-gradient(135deg, #004C97 0%, #333333 100%);
+            color: white;
+            padding: 40px 0 20px;
+            margin-top: 60px;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            margin-bottom: 20px;
+        }
+
+        .footer-section h4 {
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+            color: #8DAA91;
+            font-weight: 600;
+        }
+
+        .footer-section p,
+        .footer-section a {
+            color: #FFFFFF;
+            text-decoration: none;
+            line-height: 1.6;
+            font-size: 0.95rem;
+            opacity: 0.9;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        .footer-section a:hover {
+            opacity: 1;
+            color: #6CB4EE;
+            text-decoration: underline;
+        }
+
+        .footer-bottom {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px 20px 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .footer-bottom p {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 0.9rem;
+            margin: 0;
+        }
+
+        .creator-credit {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.85rem;
+            font-style: italic;
+        }
+
         @media (max-width: 1024px) {
             .main-container {
                 flex-direction: column;
@@ -518,6 +550,28 @@
             .view-toggle {
                 align-self: flex-end;
             }
+
+            footer {
+                padding: 30px 0 15px;
+            }
+
+            .footer-content {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 20px;
+            }
+
+            .footer-bottom {
+                flex-direction: column;
+                text-align: center;
+                gap: 10px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .footer-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
         }
     </style>
 </head>
@@ -545,6 +599,17 @@
         </div>
     </header>
 
+    <div class="hero-section">
+        <div class="hero-content">
+            <h1>Resource Hub</h1>
+            <p>Find everything you need to excel in Model UN</p>
+            <div class="hero-buttons">
+                <a href="#add-resource" class="hero-btn">📝 Submit Resource</a>
+                <a href="#request" class="hero-btn">💡 Request Resource</a>
+            </div>
+        </div>
+    </div>
+
     <div class="main-container">
         <aside class="sidebar">
             <div class="sidebar-header">
@@ -562,6 +627,7 @@
                 <div class="filter-title">Type</div>
                 <select class="filter-dropdown" id="toolType">
                     <option value="">All Types</option>
+                    <option value="game">Interactive Games</option>
                     <option value="template">Templates</option>
                     <option value="guide">Guides</option>
                     <option value="video">Videos</option>
@@ -608,7 +674,7 @@
 
         <main class="content-area">
             <div class="results-header">
-                <div class="results-count" id="resultsCount">Showing 24 resources</div>
+                <div class="results-count" id="resultsCount">Showing 6 resources</div>
                 <div class="view-toggle">
                     <button class="view-btn active">Grid</button>
                     <button class="view-btn">List</button>
@@ -616,6 +682,22 @@
             </div>
 
             <div class="resources-grid" id="resourcesGrid">
+                <!-- Interactive Game Card -->
+                <div class="resource-card" data-type="game" data-level="beginner" data-skill="speaking">
+                    <div class="card-tags">
+                        <span class="tag game">Interactive Game</span>
+                        <span class="tag beginner">All Levels</span>
+                    </div>
+                    <h3 class="card-title">Points & Motions Quiz Game</h3>
+                    <p class="card-description">
+                        Test your knowledge of MUN parliamentary procedure! Interactive quiz game with 20 questions, difficulty levels, and streak bonuses.
+                    </p>
+                    <div class="card-footer">
+                        <a href="mun-game.html" class="card-button" target="_blank">Play Now</a>
+                        <span class="card-format">Interactive</span>
+                    </div>
+                </div>
+
                 <!-- Position Paper Template -->
                 <div class="resource-card" data-type="template" data-level="beginner" data-skill="writing">
                     <div class="card-tags">
@@ -627,7 +709,7 @@
                         Complete template for writing effective position papers with examples and formatting guidelines.
                     </p>
                     <div class="card-footer">
-                        <a href="https://docs.google.com/document/d/1jFzDliLyJj1v9n-l8mT11D5k4YySER2ZuS5iNdgkljw/edit?usp=sharing">View Template</a>
+                        <a href="https://docs.google.com/document/d/1jFzDliLyJj1v9n-l8mT11D5k4YySER2ZuS5iNdgkljw/edit?usp=sharing" class="card-button" target="_blank" rel="noopener noreferrer">View Template</a>
                         <span class="card-format">Google Docs</span>
                     </div>
                 </div>
@@ -699,188 +781,7 @@
         </main>
     </div>
 
-    <script>
-        // Filter functionality
-        const filters = {
-            search: document.getElementById('searchInput'),
-            toolType: document.getElementById('toolType'),
-            level: document.getElementById('level'),
-            skillFocus: document.getElementById('skillFocus'),
-            committeeType: document.getElementById('committeeType')
-        };
-
-        const resourceCards = document.querySelectorAll('.resource-card');
-        const resultsCount = document.getElementById('resultsCount');
-
-        function filterResources() {
-            let visibleCount = 0;
-            
-            resourceCards.forEach(card => {
-                let show = true;
-                
-                // Search filter
-                const searchTerm = filters.search.value.toLowerCase();
-                if (searchTerm) {
-                    const title = card.querySelector('.card-title').textContent.toLowerCase();
-                    const description = card.querySelector('.card-description').textContent.toLowerCase();
-                    if (!title.includes(searchTerm) && !description.includes(searchTerm)) {
-                        show = false;
-                    }
-                }
-                
-                // Dropdown filters
-                if (filters.toolType.value && card.dataset.type !== filters.toolType.value) show = false;
-                if (filters.level.value && card.dataset.level !== filters.level.value) show = false;
-                if (filters.skillFocus.value && card.dataset.skill !== filters.skillFocus.value) show = false;
-                // Committee type filter removed since none of the current resources have committee data
-                
-                card.style.display = show ? 'block' : 'none';
-                if (show) visibleCount++;
-            });
-            
-            resultsCount.textContent = `Showing ${visibleCount} resource${visibleCount !== 1 ? 's' : ''}`;
-        }
-
-        // Add event listeners
-        Object.values(filters).forEach(filter => {
-            filter.addEventListener('input', filterResources);
-        });
-
-        // View toggle functionality
-        const viewBtns = document.querySelectorAll('.view-btn');
-        viewBtns.forEach(btn => {
-            btn.addEventListener('click', () => {
-                viewBtns.forEach(b => b.classList.remove('active'));
-                btn.classList.add('active');
-            });
-        });
-
-        // Clear filters functionality
-        const clearFiltersBtn = document.getElementById('clearFilters');
-        clearFiltersBtn.addEventListener('click', () => {
-            filters.search.value = '';
-            Object.values(filters).forEach(filter => {
-                if (filter.tagName === 'SELECT') {
-                    filter.selectedIndex = 0;
-                }
-            });
-            filterResources();
-        });
-
-        // Initial filter
-        filterResources();
-    </script>
-            <style>
-        /* Footer Styles */
-        footer {
-            background: linear-gradient(135deg, #004C97 0%, #333333 100%);
-            color: white;
-            padding: 40px 0 20px;
-            margin-top: 60px;
-        }
-
-        .footer-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 30px;
-            margin-bottom: 20px;
-        }
-
-        .footer-section h4 {
-            margin-bottom: 15px;
-            font-size: 1.1rem;
-            color: #8DAA91;
-            font-weight: 600;
-        }
-
-        .footer-section p,
-        .footer-section a {
-            color: #FFFFFF;
-            text-decoration: none;
-            line-height: 1.6;
-            font-size: 0.95rem;
-            opacity: 0.9;
-            margin-bottom: 8px;
-            display: block;
-        }
-
-        .footer-section a:hover {
-            opacity: 1;
-            color: #6CB4EE;
-            text-decoration: underline;
-        }
-
-        .footer-bottom {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px 20px 0;
-            border-top: 1px solid rgba(255, 255, 255, 0.2);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 15px;
-        }
-
-        .footer-bottom p {
-            color: rgba(255, 255, 255, 0.8);
-            font-size: 0.9rem;
-            margin: 0;
-        }
-
-        .creator-credit {
-            color: rgba(255, 255, 255, 0.7);
-            font-size: 0.85rem;
-            font-style: italic;
-        }
-
-        /* Mobile Responsiveness */
-        @media (max-width: 768px) {
-            footer {
-                padding: 30px 0 15px;
-            }
-
-            .footer-content {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 20px;
-            }
-
-            .footer-bottom {
-                flex-direction: column;
-                text-align: center;
-                gap: 10px;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .footer-content {
-                grid-template-columns: 1fr;
-                text-align: center;
-            }
-        }
-
-        /* Demo body styles (remove when implementing) */
-        body {
-            font-family: 'Georgia', 'Times New Roman', serif;
-            margin: 0;
-            padding: 0;
-            background: #f8f9fa;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .demo-content {
-            flex: 1;
-            padding: 40px 20px;
-            text-align: center;
-            color: #333;
-        }
-    </style>
-        <footer>
+    <footer>
         <div class="footer-content">
             <div class="footer-section">
                 <h4>Contact Information</h4>
@@ -908,5 +809,69 @@
             <p class="creator-credit">Created by Michael Fleischmann</p>
         </div>
     </footer>
+
+    <script>
+        const filters = {
+            search: document.getElementById('searchInput'),
+            toolType: document.getElementById('toolType'),
+            level: document.getElementById('level'),
+            skillFocus: document.getElementById('skillFocus'),
+            committeeType: document.getElementById('committeeType')
+        };
+
+        const resourceCards = document.querySelectorAll('.resource-card');
+        const resultsCount = document.getElementById('resultsCount');
+
+        function filterResources() {
+            let visibleCount = 0;
+            
+            resourceCards.forEach(card => {
+                let show = true;
+                
+                const searchTerm = filters.search.value.toLowerCase();
+                if (searchTerm) {
+                    const title = card.querySelector('.card-title').textContent.toLowerCase();
+                    const description = card.querySelector('.card-description').textContent.toLowerCase();
+                    if (!title.includes(searchTerm) && !description.includes(searchTerm)) {
+                        show = false;
+                    }
+                }
+                
+                if (filters.toolType.value && card.dataset.type !== filters.toolType.value) show = false;
+                if (filters.level.value && card.dataset.level !== filters.level.value) show = false;
+                if (filters.skillFocus.value && card.dataset.skill !== filters.skillFocus.value) show = false;
+                
+                card.style.display = show ? 'block' : 'none';
+                if (show) visibleCount++;
+            });
+            
+            resultsCount.textContent = `Showing ${visibleCount} resource${visibleCount !== 1 ? 's' : ''}`;
+        }
+
+        Object.values(filters).forEach(filter => {
+            filter.addEventListener('input', filterResources);
+        });
+
+        const viewBtns = document.querySelectorAll('.view-btn');
+        viewBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                viewBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+            });
+        });
+
+        const clearFiltersBtn = document.getElementById('clearFilters');
+        clearFiltersBtn.addEventListener('click', () => {
+            filters.search.value = '';
+            Object.values(filters).forEach(filter => {
+                if (filter.tagName === 'SELECT') {
+                    filter.selectedIndex = 0;
+                }
+            });
+            filterResources();
+        });
+
+        filterResources();
+    </script>
 </body>
 </html>
