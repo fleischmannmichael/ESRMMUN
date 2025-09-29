@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Points & Motions Quiz - MUNESRM</title>
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Georgia', 'Times New Roman', serif;
+            overflow-x: hidden;
+            background: #f8f9fa;
+        }
+
+        #root {
+            min-height: 100vh;
+        }
+
+        /* Header matching your website */
+        .game-header {
+            background: #004C97;
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 2px 10px rgba(0, 76, 151, 0.15);
+        }
+
+        .game-header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .game-logo h1 {
+            font-size: 1.4rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+        .game-tagline {
+            font-size: 0.8rem;
+            opacity: 0.9;
+            font-style: italic;
+        }
+
+        .back-btn {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 8px 16px;
+            border: 2px solid white;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .back-btn:hover {
+            background: white;
+            color: #004C97;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        @media (max-width: 768px) {
+            .game-header-content {
+                flex-direction: column;
+                gap: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="game-header">
+        <div class="game-header-content">
+            <div class="game-logo">
+                <h1>MUNESRM</h1>
+                <div class="game-tagline">Points & Motions Quiz</div>
+            </div>
+            <a href="resources.html" class="back-btn">← Back to Resources</a>
+        </div>
+    </div>
+    <div id="root"></div>
+
+    <script>
+        const { useState, useEffect } = React;
+        
+        function MUNGame() {
+          const [gameState, setGameState] = useState('menu');
+          const [currentQuestion, setCurrentQuestion] = useState(0);
+          const [score, setScore] = useState(0);
+          const [selectedAnswer, setSelectedAnswer] = useState(null);
+          const [showFeedback, setShowFeedback] = useState(false);
+          const [questions, setQuestions] = useState([]);
+          const [timeLeft, setTimeLeft] = useState(20);
+          const [answeredQuestions, setAnsweredQuestions] = useState([]);
+          const [streak, setStreak] = useState(0);
+          const [bestStreak, setBestStreak] = useState(0);
+          const [difficulty, setDifficulty] = useState('medium');
+          const [showStreak, setShowStreak] = useState(false);
+          const [generatedQuestions, setGeneratedQuestions] = useState([]);
+
+          const allQuestions = [
+            { term: "Point of Order", definition: "Raised when the rules of procedure are not being followed", example: "The chair didn't recognize me even though I raised my placard first" },
+            { term: "Motion to Introduce a Resolution", definition: "Brings a draft resolution to the floor for debate", example: "I motion to introduce draft resolution 1.1" },
+            { term: "Point of Personal Privilege", definition: "Related to comfort or audibility (only audibility may interrupt)", example: "I cannot hear the speaker clearly from the back of the room" },
+            { term: "Motion for an Unmoderated Caucus", definition: "Free discussion time for bloc-building and writing clauses", example: "I motion for a 10-minute unmoderated caucus to discuss amendments" },
+            { term: "Point of Information", definition: "Question to a delegate after their speech about their statement or resolution", example: "Does the delegate believe this clause addresses water scarcity?" },
+            { term: "Motion to Move into Voting Procedure", definition: "Ends debate and moves the committee to voting", example: "I motion to move into voting procedure on this resolution" },
+            { term: "Point of Parliamentary Inquiry", definition: "Ask the chair about rules of procedure", example: "How many speakers are required before we can move to voting?" },
+            { term: "Motion to Set the Speaker's Time", definition: "Decide how long each speech should be", example: "I motion to set the speaker's time to 90 seconds" },
+            { term: "Right of Reply", definition: "When a delegate feels their country has been directly insulted", example: "The previous speaker made offensive remarks about my nation's sovereignty" },
+            { term: "Motion to Table the Resolution", definition: "Pauses debate on a resolution to resume later", example: "I motion to table this resolution until we gather more information" },
+            { term: "Point of Information to the Chair", definition: "Ask the chair about the topic or debate flow (not procedure)", example: "What is the current status of amendments to this resolution?" },
+            { term: "Motion to Close the Speaker's List", definition: "Stops adding new speakers; once exhausted, debate ends", example: "I motion to close the speaker's list" },
+            { term: "Point of Clarification", definition: "Request explanation of a term, phrase, or rule", example: "Could the chair clarify what 'substantive' means in this context?" },
+            { term: "Motion to Extend Debate Time", definition: "Adds extra time for speeches or questions", example: "I motion to extend debate time by 15 minutes" },
+            { term: "Motion to Divide the Question", definition: "Vote on clauses of a resolution separately", example: "I motion to divide the question and vote on clauses 3 and 4 separately" },
+            { term: "Point of Order on Voting", definition: "Raised if there's a procedural error during voting", example: "Several delegates voted twice on that motion" },
+            { term: "Motion to Suspend Debate", definition: "Pause debate for breaks, lunch, or adjournment", example: "I motion to suspend debate for a 15-minute break" },
+            { term: "Motion to Reconsider", definition: "Reopens debate on a resolution or amendment already voted on", example: "I motion to reconsider the vote on the previous amendment" },
+            { term: "Motion to Set the Agenda", definition: "Decide which topic will be debated first", example: "I motion to set the agenda to Topic A: Climate Finance" },
+            { term: "Motion for a Roll Call Vote", definition: "Request roll call instead of placard voting", example: "I motion for a roll call vote on this resolution" }
+          ];
+
+          const questionTypes = [
+            { type: 'definition', prompt: 'What is the definition of:', correctLabel: 'definition' },
+            { type: 'term', prompt: 'Which point or motion is this:', correctLabel: 'term' },
+            { type: 'example', prompt: 'This is an example of:', correctLabel: 'term' }
+          ];
+
+          useEffect(() => {
+            if (gameState === 'playing' && timeLeft > 0 && !showFeedback) {
+              const timer = setTimeout(() => setTimeLeft(timeLeft - 1), 1000);
+              return () => clearTimeout(timer);
+            } else if (timeLeft === 0 && !showFeedback) {
+              handleAnswer(null);
+            }
+          }, [timeLeft, gameState, showFeedback]);
+
+          const generateQuestion = (questionData) => {
+            const questionType = questionTypes[Math.floor(Math.random() * questionTypes.length)];
+            let correctAnswer = questionData.term;
+            let questionText = questionData.definition;
+            
+            if (questionType.type === 'definition') {
+              questionText = questionData.term;
+              correctAnswer = questionData.definition;
+            } else if (questionType.type === 'example') {
+              questionText = questionData.example;
+              correctAnswer = questionData.term;
+            }
+
+            const wrongAnswers = allQuestions
+              .filter(q => q.term !== questionData.term)
+              .sort(() => Math.random() - 0.5)
+              .slice(0, 3)
+              .map(q => questionType.correctLabel === 'definition' ? q.definition : q.term);
+
+            const answers = [correctAnswer, ...wrongAnswers].sort(() => Math.random() - 0.5);
+
+            return { prompt: questionType.prompt, question: questionText, answers, correct: correctAnswer };
+          };
+
+          useEffect(() => {
+            if (questions.length > 0 && generatedQuestions.length === 0) {
+              setGeneratedQuestions(questions.map(q => generateQuestion(q)));
+            }
+          }, [questions]);
+
+          const currentQ = generatedQuestions[currentQuestion] || null;
+
+          const startGame = () => {
+            const numQuestions = difficulty === 'easy' ? 10 : difficulty === 'medium' ? 15 : 20;
+            const shuffled = [...allQuestions].sort(() => Math.random() - 0.5).slice(0, numQuestions);
+            setQuestions(shuffled);
+            setGeneratedQuestions([]);
+            setGameState('playing');
+            setCurrentQuestion(0);
+            setScore(0);
+            setAnsweredQuestions([]);
+            setSelectedAnswer(null);
+            setShowFeedback(false);
+            setTimeLeft(20);
+            setStreak(0);
+            setBestStreak(0);
+          };
+
+          const handleAnswer = (answer) => {
+            setSelectedAnswer(answer);
+            setShowFeedback(true);
+            
+            const isCorrect = answer === currentQ.correct;
+            const timeBonus = Math.floor(timeLeft * 5);
+            const basePoints = difficulty === 'easy' ? 50 : difficulty === 'medium' ? 100 : 150;
+            const streakBonus = streak >= 3 ? 50 : 0;
+            const pointsEarned = isCorrect ? basePoints + timeBonus + streakBonus : 0;
+            
+            if (isCorrect) {
+              const newStreak = streak + 1;
+              setStreak(newStreak);
+              if (newStreak > bestStreak) setBestStreak(newStreak);
+              if (newStreak >= 3) {
+                setShowStreak(true);
+                setTimeout(() => setShowStreak(false), 2000);
+              }
+            } else {
+              setStreak(0);
+            }
+            
+            setAnsweredQuestions([...answeredQuestions, {
+              question: currentQ.question,
+              correct: isCorrect,
+              points: pointsEarned,
+              timeLeft: timeLeft
+            }]);
+
+            if (isCorrect) setScore(score + pointsEarned);
+
+            setTimeout(() => {
+              if (currentQuestion < questions.length - 1) {
+                setCurrentQuestion(currentQuestion + 1);
+                setSelectedAnswer(null);
+                setShowFeedback(false);
+                setTimeLeft(20);
+              } else {
+                setGameState('results');
+              }
+            }, 2500);
+          };
+
+          if (gameState === 'menu') {
+            return React.createElement('div', { style: { minHeight: 'calc(100vh - 70px)', background: 'linear-gradient(135deg, #004C97 0%, #6CB4EE 100%)', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '40px 20px' } },
+              React.createElement('div', { style: { background: 'white', borderRadius: '16px', padding: '40px', maxWidth: '600px', width: '100%', boxShadow: '0 20px 50px rgba(0,0,0,0.2)', borderTop: '4px solid #004C97' } },
+                React.createElement('div', { style: { textAlign: 'center' } },
+                  React.createElement('div', { style: { background: '#004C97', width: '80px', height: '80px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 20px', fontSize: '40px', boxShadow: '0 4px 15px rgba(0,76,151,0.3)' } }, '🏆'),
+                  React.createElement('h1', { style: { fontSize: '2.5rem', fontWeight: 'bold', color: '#004C97', marginBottom: '10px' } }, 'MUN Mastery'),
+                  React.createElement('p', { style: { fontSize: '1.2rem', color: '#666', marginBottom: '30px' } }, 'Points & Motions Challenge'),
+                  React.createElement('div', { style: { background: '#f8f9fa', borderRadius: '12px', padding: '24px', marginBottom: '24px', textAlign: 'left', border: '1px solid #e9ecef' } },
+                    React.createElement('h2', { style: { fontWeight: 'bold', fontSize: '1.1rem', marginBottom: '16px', color: '#004C97' } }, 'How to Play:'),
+                    React.createElement('ul', { style: { listStyle: 'none', padding: 0, margin: 0 } },
+                      ['Answer questions about MUN points and motions', 'You have 20 seconds per question', 'Faster answers earn more points', 'Build streaks for bonus points (3+ correct)'].map((text, i) =>
+                        React.createElement('li', { key: i, style: { marginBottom: '12px', display: 'flex', alignItems: 'center', color: '#333' } },
+                          React.createElement('span', { style: { marginRight: '12px', color: '#004C97', fontSize: '1.2rem', fontWeight: 'bold' } }, ['✓', '⏱', '⚡', '🏅'][i]),
+                          text
+                        )
+                      )
+                    )
+                  ),
+                  React.createElement('div', { style: { marginBottom: '24px' } },
+                    React.createElement('h3', { style: { fontWeight: '600', color: '#666', marginBottom: '12px', fontSize: '0.95rem' } }, 'Select Difficulty:'),
+                    React.createElement('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '12px' } },
+                      ['easy', 'medium', 'hard'].map(level =>
+                        React.createElement('button', {
+                          key: level,
+                          onClick: () => setDifficulty(level),
+                          style: {
+                            padding: '12px', borderRadius: '8px', fontWeight: '600', textTransform: 'capitalize',
+                            border: 'none', cursor: 'pointer', background: difficulty === level ? '#004C97' : '#f1f5f9',
+                            color: difficulty === level ? 'white' : '#666', transition: 'all 0.2s', fontFamily: 'Georgia, serif'
+                          }
+                        }, level)
+                      )
+                    ),
+                    React.createElement('p', { style: { fontSize: '0.85rem', color: '#999', marginTop: '8px', textAlign: 'center' } },
+                      difficulty === 'easy' ? '10 questions • Basic terms' :
+                      difficulty === 'medium' ? '15 questions • Mixed difficulty' : '20 questions • All terms'
+                    )
+                  ),
+                  React.createElement('button', {
+                    onClick: startGame,
+                    style: {
+                      background: '#004C97', color: 'white', padding: '16px 40px', borderRadius: '8px',
+                      fontSize: '1.2rem', fontWeight: 'bold', border: 'none', cursor: 'pointer', display: 'block',
+                      margin: '0 auto', boxShadow: '0 4px 12px rgba(0,76,151,0.3)', transition: 'all 0.2s', fontFamily: 'Georgia, serif'
+                    },
+                    onMouseEnter: (e) => { e.target.style.background = '#003d7a'; e.target.style.transform = 'scale(1.05)'; },
+                    onMouseLeave: (e) => { e.target.style.background = '#004C97'; e.target.style.transform = 'scale(1)'; }
+                  }, 'Start Challenge →')
+                )
+              )
+            );
+          }
+
+          if (gameState === 'results') {
+            const maxScore = questions.length * (difficulty === 'easy' ? 150 : difficulty === 'medium' ? 200 : 250);
+            const percentage = Math.round((score / maxScore) * 100);
+            const correctCount = answeredQuestions.filter(q => q.correct).length;
+            const accuracy = Math.round((correctCount / questions.length) * 100);
+            
+            const badge = percentage >= 90 ? 'Outstanding Delegate' : percentage >= 75 ? 'Distinguished Delegate' : 
+                         percentage >= 60 ? 'Honorable Mention' : 'Participant';
+            const badgeColor = percentage >= 90 ? '#d97706' : percentage >= 75 ? '#004C97' : 
+                              percentage >= 60 ? '#16a34a' : '#666';
+            
+            return React.createElement('div', { style: { minHeight: 'calc(100vh - 70px)', background: 'linear-gradient(135deg, #004C97 0%, #6CB4EE 100%)', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '40px 20px' } },
+              React.createElement('div', { style: { background: 'white', borderRadius: '16px', padding: '40px', maxWidth: '900px', width: '100%', boxShadow: '0 20px 50px rgba(0,0,0,0.2)' } },
+                React.createElement('div', { style: { textAlign: 'center', marginBottom: '32px' } },
+                  React.createElement('div', { style: { background: '#004C97', width: '100px', height: '100px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 20px', fontSize: '50px', boxShadow: '0 4px 15px rgba(0,76,151,0.3)' } }, '🏆'),
+                  React.createElement('h1', { style: { fontSize: '2.5rem', fontWeight: 'bold', color: '#004C97', marginBottom: '12px' } }, 'Challenge Complete!'),
+                  React.createElement('p', { style: { fontSize: '1.5rem', fontWeight: '600', marginBottom: '20px', color: badgeColor } }, badge),
+                  React.createElement('div', { style: { display: 'flex', justifyContent: 'center', gap: '32px', flexWrap: 'wrap' } },
+                    [
+                      { label: 'Total Points', value: score, color: '#004C97' },
+                      { label: 'Accuracy', value: accuracy + '%', color: '#16a34a' },
+                      { label: 'Best Streak', value: bestStreak, color: '#ea580c' }
+                    ].map((stat, i) =>
+                      React.createElement('div', { key: i, style: { textAlign: 'center' } },
+                        React.createElement('p', { style: { fontSize: '3rem', fontWeight: 'bold', color: stat.color } }, stat.value),
+                        React.createElement('p', { style: { fontSize: '0.9rem', color: '#666', fontWeight: '500' } }, stat.label)
+                      )
+                    )
+                  )
+                ),
+                React.createElement('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '16px', marginBottom: '24px' } },
+                  React.createElement('div', { style: { background: '#f8f9fa', padding: '16px', borderRadius: '12px', border: '1px solid #e9ecef', display: 'flex', justifyContent: 'space-between', alignItems: 'center' } },
+                    React.createElement('span', { style: { color: '#666', fontWeight: '500' } }, 'Correct Answers'),
+                    React.createElement('span', { style: { fontSize: '1.5rem', fontWeight: 'bold', color: '#16a34a' } }, correctCount + '/' + questions.length)
+                  ),
+                  React.createElement('div', { style: { background: '#f8f9fa', padding: '16px', borderRadius: '12px', border: '1px solid #e9ecef', display: 'flex', justifyContent: 'space-between', alignItems: 'center' } },
+                    React.createElement('span', { style: { color: '#666', fontWeight: '500' } }, 'Average Time'),
+                    React.createElement('span', { style: { fontSize: '1.5rem', fontWeight: 'bold', color: '#004C97' } },
+                      Math.round(answeredQuestions.reduce((acc, q) => acc + (20 - q.timeLeft), 0) / questions.length) + 's'
+                    )
+                  )
+                ),
+                React.createElement('div', { style: { marginBottom: '24px' } },
+                  React.createElement('h2', { style: { fontSize: '1.2rem', fontWeight: 'bold', marginBottom: '16px', color: '#004C97' } }, 'Question Breakdown:'),
+                  React.createElement('div', { style: { maxHeight: '300px', overflowY: 'auto' } },
+                    answeredQuestions.map((q, idx) =>
+                      React.createElement('div', {
+                        key: idx,
+                        style: {
+                          padding: '16px', borderRadius: '8px', display: 'flex', justifyContent: 'space-between', alignItems: 'center',
+                          border: '2px solid ' + (q.correct ? '#bbf7d0' : '#fecaca'),
+                          background: q.correct ? '#f0fdf4' : '#fef2f2', marginBottom: '8px'
+                        }
+                      },
+                        React.createElement('div', { style: { display: 'flex', alignItems: 'center', flex: 1 } },
+                          React.createElement('span', { style: { marginRight: '12px', fontSize: '1.2rem' } }, q.correct ? '✓' : '✗'),
+                          React.createElement('div', { style: { flex: 1 } },
+                            React.createElement('span', { style: { fontWeight: '500', color: '#333', display: 'block' } }, 'Question ' + (idx + 1)),
+                            React.createElement('p', { style: { fontSize: '0.85rem', color: '#666', margin: '4px 0 0 0', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', maxWidth: '400px' } }, q.question)
+                          )
+                        ),
+                        React.createElement('div', { style: { textAlign: 'right', marginLeft: '16px' } },
+                          React.createElement('span', { style: { fontWeight: 'bold', fontSize: '1.1rem', color: '#333', display: 'block' } }, '+' + q.points),
+                          React.createElement('p', { style: { fontSize: '0.75rem', color: '#666' } }, (20 - q.timeLeft) + 's')
+                        )
+                      )
+                    )
+                  )
+                ),
+                React.createElement('div', { style: { display: 'flex', gap: '16px', flexWrap: 'wrap' } },
+                  React.createElement('button', {
+                    onClick: startGame,
+                    style: { flex: 1, minWidth: '200px', background: '#004C97', color: 'white', padding: '16px', borderRadius: '8px', fontWeight: 'bold', border: 'none', cursor: 'pointer', fontSize: '1rem', fontFamily: 'Georgia, serif', transition: 'background 0.2s' },
+                    onMouseEnter: (e) => e.target.style.background = '#003d7a',
+                    onMouseLeave: (e) => e.target.style.background = '#004C97'
+                  }, '🔄 Play Again'),
+                  React.createElement('button', {
+                    onClick: () => setGameState('menu'),
+                    style: { flex: 1, minWidth: '200px', background: '#e9ecef', color: '#333', padding: '16px', borderRadius: '8px', fontWeight: 'bold', border: 'none', cursor: 'pointer', fontSize: '1rem', fontFamily: 'Georgia, serif', transition: 'background 0.2s' },
+                    onMouseEnter: (e) => e.target.style.background = '#dee2e6',
+                    onMouseLeave: (e) => e.target.style.background = '#e9ecef'
+                  }, 'Main Menu')
+                )
+              )
+            );
+          }
+
+          if (!currentQ) return null;
+
+          const letters = ['A', 'B', 'C', 'D'];
+
+          return React.createElement('div', { style: { minHeight: 'calc(100vh - 70px)', background: '#f8f9fa', padding: '20px' } },
+            showStreak && React.createElement('div', { style: { position: 'fixed', top: '100px', left: '50%', transform: 'translateX(-50%)', zIndex: 1000, animation: 'bounce 1s' } },
+              React.createElement('div', { style: { background: 'linear-gradient(135deg, #f97316 0%, #dc2626 100%)', color: 'white', padding: '16px 32px', borderRadius: '50px', fontWeight: 'bold', fontSize: '1.2rem', boxShadow: '0 8px 20px rgba(0,0,0,0.3)' } },
+                '⚡ ' + streak + ' Streak! 🔥 +50 Bonus'
+              )
+            ),
+            React.createElement('div', { style: { maxWidth: '1000px', margin: '0 auto', paddingTop: '20px' } },
+              React.createElement('div', { style: { background: 'white', borderRadius: '16px', overflow: 'hidden', boxShadow: '0 4px 15px rgba(0,0,0,0.1)' } },
+                React.createElement('div', { style: { background: 'linear-gradient(135deg, #004C97 0%, #6CB4EE 100%)', padding: '24px', color: 'white' } },
+                  React.createElement('div', { style: { display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px', flexWrap: 'wrap', gap: '16px' } },
+                    React.createElement('div', null,
+                      React.createElement('p', { style: { fontSize: '0.85rem', opacity: 0.9, margin: 0 } }, 'Question ' + (currentQuestion + 1) + ' of ' + questions.length),
+                      React.createElement('p', { style: { fontSize: '2.5rem', fontWeight: 'bold', marginTop: '4px' } }, score + ' pts')
+                    ),
+                    React.createElement('div', { style: { textAlign: 'center' } },
+                      React.createElement('div', { style: { background: 'rgba(255, 255, 255, 0.2)', borderRadius: '50%', width: '96px', height: '96px', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '8px', border: '3px solid white' } },
+                        React.createElement('span', { style: { fontSize: '3rem', fontWeight: 'bold', color: timeLeft <= 5 ? '#fca5a5' : 'white' } }, timeLeft)
+                      ),
+                      React.createElement('p', { style: { fontSize: '0.75rem', opacity: 0.9, margin: 0 } }, 'seconds')
+                    ),
+                    React.createElement('div', { style: { textAlign: 'right' } },
+                      React.createElement('p', { style: { fontSize: '0.85rem', opacity: 0.9, margin: 0 } }, 'Streak'),
+                      React.createElement('p', { style: { fontSize: '2.5rem', fontWeight: 'bold', marginTop: '4px' } }, (streak > 0 ? '⚡' : '') + streak)
+                    )
+                  ),
+                  React.createElement('div', { style: { width: '100%', background: 'rgba(255, 255, 255, 0.2)', borderRadius: '50px', height: '12px', overflow: 'hidden' } },
+                    React.createElement('div', { style: { height: '12px', borderRadius: '50px', transition: 'all 1s linear', background: timeLeft <= 5 ? '#ef4444' : 'white', width: (timeLeft / 20 * 100) + '%' } })
+                  ),
+                  React.createElement('div', { style: { marginTop: '12px', display: 'flex', justifyContent: 'space-between', fontSize: '0.85rem', opacity: 0.9 } },
+                    React.createElement('span', null, 'Progress: ' + (currentQuestion + 1) + '/' + questions.length),
+                    React.createElement('span', { style: { textTransform: 'capitalize' } }, difficulty + ' Mode')
+                  )
+                ),
+                React.createElement('div', { style: { padding: '32px' } },
+                  React.createElement('div', { style: { marginBottom: '8px' } },
+                    React.createElement('span', { style: { display: 'inline-block', background: '#e1f5fe', color: '#0277bd', fontSize: '0.75rem', fontWeight: 'bold', padding: '6px 12px', borderRadius: '20px', textTransform: 'uppercase', letterSpacing: '0.5px' } }, currentQ.prompt)
+                  ),
+                  React.createElement('h2', { style: { fontSize: '1.8rem', fontWeight: '600', color: '#004C97', marginBottom: '32px', lineHeight: '1.4', minHeight: '80px', display: 'flex', alignItems: 'center' } }, currentQ.question),
+                  React.createElement('div', { style: { display: 'grid', gap: '16px' } },
+                    currentQ.answers.map((answer, idx) => {
+                      const isSelected = selectedAnswer === answer;
+                      const isCorrect = answer === currentQ.correct;
+                      const showResult = showFeedback && (isSelected || isCorrect);
+
+                      let bgColor = 'white', borderColor = '#e9ecef', textColor = '#333';
+                      if (showFeedback) {
+                        if (isCorrect) {
+                          bgColor = '#f0fdf4'; borderColor = '#22c55e'; textColor = '#166534';
+                        } else if (isSelected) {
+                          bgColor = '#fef2f2'; borderColor = '#ef4444'; textColor = '#991b1b';
+                        } else {
+                          bgColor = '#f8f9fa'; borderColor = '#e9ecef'; textColor = '#999';
+                        }
+                      }
+
+                      return React.createElement('button', {
+                        key: idx,
+                        onClick: () => !showFeedback && handleAnswer(answer),
+                        disabled: showFeedback,
+                        style: {
+                          width: '100%', padding: '20px 24px', borderRadius: '12px', textAlign: 'left',
+                          border: '2px solid ' + borderColor, fontWeight: '500', display: 'flex',
+                          cursor: showFeedback ? 'default' : 'pointer', fontSize: '1.05rem',
+                          background: bgColor, color: textColor, transition: 'all 0.2s', fontFamily: 'Georgia, serif',
+                          alignItems: 'center'
+                        },
+                        onMouseEnter: (e) => {
+                          if (!showFeedback) {
+                            e.target.style.borderColor = '#004C97';
+                            e.target.style.background = '#f0f7ff';
+                            e.target.style.transform = 'translateY(-2px)';
+                            e.target.style.boxShadow = '0 4px 12px rgba(0,76,151,0.15)';
+                          }
+                        },
+                        onMouseLeave: (e) => {
+                          if (!showFeedback) {
+                            e.target.style.borderColor = '#e9ecef';
+                            e.target.style.background = 'white';
+                            e.target.style.transform = 'translateY(0)';
+                            e.target.style.boxShadow = 'none';
+                          }
+                        }
+                      },
+                        React.createElement('div', { style: { flexShrink: 0, width: '40px', height: '40px', borderRadius: '8px', background: showFeedback ? (isCorrect || isSelected ? 'transparent' : '#f1f5f9') : '#f1f5f9', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 'bold', color: '#666', marginRight: '16px', transition: 'all 0.3s' } }, letters[idx]),
+                        React.createElement('div', { style: { flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'space-between' } },
+                          React.createElement('span', null, answer),
+                          showResult && React.createElement('span', { style: { fontSize: '1.5rem', marginLeft: '16px' } }, isCorrect ? '✓' : '✗')
+                        )
+                      );
+                    })
+                  ),
+                  showFeedback && React.createElement('div', {
+                    style: {
+                      marginTop: '24px', padding: '16px', borderRadius: '12px', border: '2px solid',
+                      borderColor: selectedAnswer === currentQ.correct ? '#bbf7d0' : '#bfdbfe',
+                      background: selectedAnswer === currentQ.correct ? '#f0fdf4' : '#eff6ff'
+                    }
+                  },
+                    React.createElement('p', { style: { fontWeight: '600', color: '#004C97', marginBottom: '4px' } },
+                      selectedAnswer === currentQ.correct ? '🎉 Correct!' : '💡 Learning Moment'
+                    ),
+                    React.createElement('p', { style: { fontSize: '0.9rem', color: '#666', margin: 0 } },
+                      selectedAnswer === currentQ.correct 
+                        ? 'Great job! You earned ' + (answeredQuestions[answeredQuestions.length - 1]?.points || 0) + ' points.'
+                        : 'The correct answer is: ' + currentQ.correct
+                    )
+                  )
+                )
+              )
+            )
+          );
+        }
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(React.createElement(MUNGame));
+    </script>
+</body>
+</html>
